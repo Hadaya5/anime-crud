@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react'
 import AnimeContext from '../context/AnimeContext'
 import "../styles/AnimeForm.css"
+import { Box, Button, Card, CssBaseline, Grid, TextField, Typography } from '@mui/material';
 
 export const ShowAnimes = () => {
 
@@ -51,75 +52,97 @@ export const ShowAnimes = () => {
 
   return (
     <>
-        <ul>
+        
+        <Box sx={{display: 'flex', flexWrap: 'wrap', marginLeft: 3}}>
 
             { thereIsAnime 
             ? 
                 animeState.map( anime => {
                     return (
-                        <div className='item'>
-                            <li>{anime.name}</li>
-                            <p>
-                                {editingName === anime.name ? (
-                                    <input
-                                        type="text"
-                                        value={editSinopsis}
-                                        onChange={(e) => setEditSinopsis(e.target.value)}
-                                    />
-                                    ) : (
-                                    anime.sinopsis
-                                )}
-                            </p>
-                            <p>
-                                {editingName === anime.name ? (
-                                    <input
-                                        type="text"
-                                        value={editFecha}
-                                        onChange={(e) => setEditFecha(e.target.value)}
-                                    />
-                                    ) : (
-                                    anime.fechaEstreno
-                                )}
-                            </p>
-                            <p>
-                                {editingName === anime.name ? (
-                                    <input
-                                        type="text"
-                                        value={editOpinion}
-                                        onChange={(e) => setEditOpinion(e.target.value)}
-                                    />
-                                    ) : (
-                                    anime.opinion
-                                )}
-                            </p>
+                        <Card variant='outlined' className='item' sx={{maxWidth: '80vw', minWidth: '40vw', marginTop: 3, marginLeft: 3}}>
+                        <Grid container spacing={2} sx={{marginLeft: 2}}>
+                            <Grid item xs={7}>
+                                <p>Nombre: <span>{anime.name}</span></p>
 
-                            {editingName === anime.name ? (
-                                <button
-                                    className='buttonIcon'
-                                    onClick={() => handleSave(anime.name)} >
-                                    Guardar
-                                </button>
-                                ) : (
-                                <button
-                                    className='buttonIcon'
-                                    onClick={() => handleEdit(anime.name)} >
-                                    Editar
-                                </button>
-                            )}
+                                <p>Sinopsis: <span>
+                                        {editingName === anime.name ? (
+                                            <TextField
+                                                type="text"
+                                                value={editSinopsis}
+                                                onChange={(e) => setEditSinopsis(e.target.value)}
+                                            />
+                                            ) : (
+                                            anime.sinopsis
+                                        )}
+                                    </span>
+                                </p>
+                                <p>Fecha de estreno: <span>
+                                    {editingName === anime.name ? (
+                                        <TextField
+                                            type="text"
+                                            value={editFecha}
+                                            onChange={(e) => setEditFecha(e.target.value)}
+                                        />
+                                        ) : (
+                                        anime.fechaEstreno
+                                    )}
+                                </span>
+                                </p>
 
-                            <button onClick={ () => { setAnimeState(animeState.filter(item => item.name !== anime.name));} }>
-                                Eliminar
-                            </button>
+                                <p>Opinión: <span>
+                                        {editingName === anime.name ? (
+                                            <TextField
+                                                type="text"
+                                                value={editOpinion}
+                                                onChange={(e) => setEditOpinion(e.target.value)}
+                                            />
+                                            ) : (
+                                            anime.opinion
+                                        )}
+                                    </span>
+                                </p>
+                            </Grid>
+                            <Grid item xs={3} sx={{display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
+                                {editingName === anime.name ? (
+                                    <Button
+                                        className='buttonIcon'
+                                        variant='contained'
+                                        onClick={() => handleSave(anime.name)} 
+                                        sx={{marginBottom: 5}}
+                                    >
+                                        Guardar
+                                    </Button>
+                                    ) : (
+                                    <Button
+                                        className='buttonIcon'
+                                        variant='contained'
+                                        onClick={() => handleEdit(anime.name)} 
+                                        sx={{marginBottom: 3}}
+                                        >
+                                        Editar
+                                    </Button>
+                                )}
 
-                        </div>
+                                <Button onClick={ () => { setAnimeState(animeState.filter(item => item.name !== anime.name));} }
+                                        variant='contained'
+                                >
+                                    Eliminar
+                                </Button>
+                            </Grid>
+                        </Grid>
+                            
+
+                            
+
+                        </Card>
                     )
                 })
             :
-                <h4>No hay animes agregados</h4>
+                <Typography variant='h5' sx={{marginTop: 5}}>Aún no hay animes agregados</Typography>
             }
 
 
-        </ul>
+        </Box>
     </>
   )
 }

@@ -9,23 +9,31 @@ import {
 import { AnimeContextProvider } from '../context/AnimeContext'
 import { AnimeForm } from './AnimeForm'
 import { ShowAnimes } from './ShowAnimes'
+import { AppBar, Box, Toolbar, Typography } from '@mui/material';
 
 export const Main = () => {
 
 
   return (
     <AnimeContextProvider>
-      <Router>
-        <>
-        <nav>
-          <ul>
-            <li>
-              <Link to={`/create-form`}>Agregar anime</Link>
-            </li>
-            <li><Link to={`/home`}>Listado de animes vistos</Link>
-            </li>
-          </ul>
-        </nav>
+      <Router basename="/">
+      <AppBar position="static">
+          <Toolbar variant="dense">
+              <Typography variant="h6" color="inherit">
+                  Anime - CRUD
+              </Typography>
+                <Box sx={{ display: 'flex', justifyContent: 'flex-end', minWidth: '85vw' }}>
+                  <Link to={`/create-form`}  style={{ textDecoration: 'none'}}>
+                    <Typography variant="subtitle1" color="white" sx={{ marginRight: 5}}>Agregar anime</Typography>
+                  </Link>
+                  <Link to={`/home`} style={{ textDecoration: 'none'}}>
+                    <Typography variant="subtitle1" color="white">Listado de animes vistos</Typography>
+                  </Link>
+                </Box>
+          </Toolbar>
+      </AppBar>
+
+      
         <Routes>
           <Route
               exact
@@ -44,8 +52,8 @@ export const Main = () => {
               element={<ShowAnimes />}
           />
         </Routes>
-        </>
       </Router>
+
     </AnimeContextProvider>
   )
 }
